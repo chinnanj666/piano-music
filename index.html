@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Playable Piano JavaScript | CodingNepal</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="script.js" defer></script>
+  <style>
+    body {
+      background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    .wrapper {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    header h2 {
+      margin-bottom: 20px;
+      color: #444;
+    }
+    .column {
+      margin: 10px 0;
+    }
+    .piano-keys {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .piano-keys .key {
+      margin: 2px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      user-select: none;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease;
+    }
+    .piano-keys .key.black {
+      background: #333;
+      color: #fff;
+      height: 60px;
+      width: 40px;
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+    .piano-keys .key.white {
+      height: 100px;
+      width: 60px;
+    }
+    .piano-keys .key span {
+      position: absolute;
+      bottom: 5px;
+      font-size: 14px;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      transition: transform 0.3s ease-in-out;
+    }
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 10px;
+    }
+    .left, .right {
+      margin: 0;
+    }
+    .hide {
+      transform: translateY(100%);
+    }
+    @keyframes keyPressAnimation {
+    0% { background-color: #fff; }
+    50% { background-color: #f6d365; }
+    100% { background-color: #fff; }
+  }
+
+  .key-pressed {
+    animation: keyPressAnimation 0.5s linear;
+  }
+
+  /* New styles */
+  body.body-pressed {
+    animation: bodyPressAnimation 0.5s linear;
+  }
+
+  /* Example of a background animation */
+  @keyframes bodyPressAnimation {
+    0% { background-color: #f6d365; }
+    50% { background-color: #fd5e53; }
+    100% { background-color: #f6d365; }
+  }
+    @media (max-width: 768px) {
+      .wrapper {
+        padding: 10px;
+      }
+      .piano-keys .key {
+        padding: 10px;
+        font-size: 12px;
+      }
+      .piano-keys .key.black {
+        height: 40px;
+        width: 30px;
+        margin-bottom: 10px;
+      }
+      .piano-keys .key.white {
+        height: 70px;
+        width: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h2>Playable PIANO</h2>
+      <div class="column volume-slider">
+        <span>Volume</span><input type="range" min="0" max="1" value="0.5" step="any">
+      </div>
+      <div class="column keys-checkbox">
+        <span>Show Keys</span><input type="checkbox" checked>
+      </div>
+    </header>
+    <ul class="piano-keys">
+      <li class="key white" data-key="a"><span>a</span></li>
+      <li class="key black" data-key="w"><span>w</span></li>
+      <li class="key white" data-key="s"><span>s</span></li>
+      <li class="key black" data-key="e"><span>e</span></li>
+      <li class="key white" data-key="d"><span>d</span></li>
+      <li class="key white" data-key="f"><span>f</span></li>
+      <li class="key black" data-key="t"><span>t</span></li>
+      <li class="key white" data-key="g"><span>g</span></li>
+      <li class="key black" data-key="y"><span>y</span></li>
+      <li class="key white" data-key="h"><span>h</span></li>
+      <li class="key black" data-key="u"><span>u</span></li>
+      <li class="key white" data-key="j"><span>j</span></li>
+      <li class="key white" data-key="k"><span>k</span></li>
+      <li class="key black" data-key="o"><span>o</span></li>
+      <li class="key white" data-key="l"><span>l</span></li>
+      <li class="key black" data-key="p"><span>p</span></li>
+      <li class="key white" data-key=";"><span>;</span></li>
+    </ul>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="left">&copy; 2024 All rights reserved.</p>
+      <p class="right">Design by Chinna N J.</p>
+    </div>
+  </footer>
+
+  <script>
+ document.addEventListener('DOMContentLoaded', function() {
+  const keys = document.querySelectorAll('.key');
+
+  keys.forEach(key => {
+    key.addEventListener('mousedown', function() {
+      key.classList.add('key-pressed');
+      document.body.classList.add('body-pressed');
+    });
+
+    key.addEventListener('mouseup', function() {
+      key.classList.remove('key-pressed');
+    });
+
+    key.addEventListener('mouseleave', function() {
+      key.classList.remove('key-pressed');
+    });
+
+    key.addEventListener('transitionend', function() {
+      key.classList.remove('key-pressed');
+    });
+
+    key.addEventListener('touchstart', function() {
+      key.classList.add('key-pressed');
+      document.body.classList.add('body-pressed');
+    });
+
+    key.addEventListener('touchend', function() {
+      key.classList.remove('key-pressed');
+    });
+  });
+});
+
+  </script>
+</body>
+</html>
