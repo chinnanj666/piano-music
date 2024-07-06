@@ -21,7 +21,7 @@ To run this project locally, follow these steps:
 2. Navigate to the project directory: `cd piano-music`
 3. Open `index.html` in your web browser.
 
-Alternatively, you can [view a live demo here](https://example.com).
+Alternatively, you can [view a live demo here](https://chinnanj666.github.io/piano-music/).
 
 ## Usage
 
